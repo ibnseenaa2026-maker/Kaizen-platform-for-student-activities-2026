@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --navy: #0B2545;
+    --navy-2: #134074;
+    --teal: #00B4D8;
+    --teal-2: #00C4CC;
+    --bg-beige: #F4EAD3;
+    --bg-beige-2: #E8DAB2;
+    --slate: #2B2D42;
+  }
+}
+
+body {
+  background-color: var(--bg-beige);
+  color: var(--slate);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+@media print {
+  /* إجبار إظهار جميع الصور والشعارات والترويسات في الطباعة */
+  img, svg {
+    display: inline-block !important;
+    visibility: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    max-height: 70px !important;
+  }
+  
+  .print\:hidden {
+    display: none !important;
+  }
+}
