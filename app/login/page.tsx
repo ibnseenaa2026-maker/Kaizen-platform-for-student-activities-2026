@@ -8,14 +8,14 @@ export default function LoginPage() {
   const router = useRouter();
   const [isAr, setIsAr] = useState(true);
   
-  // 👥 قائمة المستفيدين بمسارات مفردة ودقيقة
+  // 👥 قائمة المستفيدين مع التأكد التام من مسار ولي الأمر الصحيح بدون حرف s
   const beneficiaries = [
     { nameAr: '🎓 لوحة طالب المدرسة', nameEn: '🎓 School Student Dashboard', path: '/dashboard/student' },
     { nameAr: '🛡️ لوحة المسؤول العام (Super Admin)', nameEn: '🛡️ Super Admin Dashboard', path: '/dashboard/admin-supervisor' },
     { nameAr: '🏫 لوحة مدير المدرسة (أ. نايف بن علي العتيبي)', nameEn: '🏫 Principal (Mr. Naif Al-Otaibi)', path: '/dashboard/principal' },
     { nameAr: '🌟 لوحة رائد النشاط الطلابي (أ. يوسف بن محمد السقاف)', nameEn: '🌟 Activity Leader (Mr. Yousef Al-Saqqaf)', path: '/dashboard/activity-leader' },
     { nameAr: '👨‍🏫 لوحة المعلم ومشرف النادي', nameEn: '👨‍🏫 Teacher & Club Supervisor', path: '/dashboard/teacher' },
-    { nameAr: '👨‍👦 لوحة أولياء الأمور', nameEn: '👨‍👦 Parents Dashboard', path: '/dashboard/parents' },
+    { nameAr: '👨‍👦 لوحة أولياء الأمور', nameEn: '👨‍👦 Parents Dashboard', path: '/dashboard/parent' },
   ];
 
   const [selectedRole, setSelectedRole] = useState(beneficiaries[0].path);
@@ -28,6 +28,14 @@ export default function LoginPage() {
       alert(isAr ? 'الرجاء إدخال اسم المستخدم وكلمة المرور!' : 'Please enter username and password!');
       return;
     }
+    
+    // التحقق المباشر: إذا كان الاختيار يتعلق بولي الأمر، نوجهه للمسار الصحيح المعتمد فوراً
+    if (selectedRole.includes('parent')) {
+      router.push('/dashboard/parent');
+      return;
+    }
+
+    // باقي اللوحات تعمل بشكل طبيعي
     router.push(selectedRole);
   };
 
@@ -80,7 +88,7 @@ export default function LoginPage() {
             <select
               value={selectedRole}
               onChange={(e) => setSelectedRole(e.target.value)}
-              className="w-full bg-gray-50 border border-gray-300 rounded-2xl p-3.5 text-[#0B2545] font-black focus:ring-2 focus:ring-[#00B4D8] outline-none shadow-sm"
+              className="w-full bg-gray-50 border border-gray-300 rounded-2xl p-3.5 text-[#0B2545] font-black focus:ring-2 focus:ring-[#00B4D8] outline-none shadow-sm cursor-pointer"
             >
               {beneficiaries.map((b, i) => (
                 <option key={i} value={b.path} className="py-2">
@@ -120,7 +128,7 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            className="w-full bg-[#0B2545] hover:bg-[#134074] text-white font-black p-4 rounded-2xl text-sm shadow-lg transition transform hover:-translate-y-0.5 mt-3"
+            className="w-full bg-[#0B2545] hover:bg-[#134074] text-white font-black p-4 rounded-2xl text-sm shadow-lg transition transform hover:-translate-y-0.5 mt-3 cursor-pointer"
           >
             {isAr ? '🔓 دخول النظام بالصلاحية المحددة' : '🔓 Login to System'}
           </button>
@@ -128,7 +136,7 @@ export default function LoginPage() {
 
         <div className="text-center pt-1 border-t border-gray-100">
           <p className="text-[11px] text-gray-500 font-bold">
-            {isAr ? 'نظام إدارة الأنشطة والتميز الطلابي — الإصدار 2026' : 'Student Activities Management System — 2026'}
+            {isAr ? 'نظام إدارة الأنشطة والتميز الطلابى — الإصدار 2026' : 'Student Activities Management System — 2026'}
           </p>
         </div>
 
@@ -136,3 +144,4 @@ export default function LoginPage() {
     </div>
   );
 }
+
